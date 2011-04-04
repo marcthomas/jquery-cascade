@@ -63,19 +63,20 @@
 			
 		});
 		
+		var node = "";
         self.bind("cascade", function() {	
           self.one("updateList", function(e, list) {	
             list = $(list)
               .filter(function() { return opt.match.call(this, opt.getParentValue(parent)); })
               .map(function() { 
-                var node = $(opt.template(this))[0];				                
-                return node; 
+				node += opt.template(this);
               });
 							
 			self.empty();//clear the source/select
 			
-            if(list.length){ 
-				self.html(list);				
+            if (node.length) {
+				self.html(node);
+				node = "";
 			}
 			
 			self.trigger("loaded.cascade",[source[0]]);//be sure to fire even if there is no data
